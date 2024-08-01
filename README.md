@@ -1,6 +1,6 @@
 ﻿# API testing using Cypress
- Start project: <br />
- cd cypress-api <br />
- npx cypress open <br />
- Implemented: \
+ **Start project**: \
+ cd cypress-api \
+ npx cypress open \
+ **Implemented**: \
 Mocking API, Headless Authorization, API Calls
