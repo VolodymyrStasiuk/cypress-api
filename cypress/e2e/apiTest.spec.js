@@ -54,7 +54,7 @@ describe('Test API using mocks', () => {
 })
 
 describe('API Authentication', () => {
-  it('Creat Article via API and delete it', () => {
+  it('Create Article via API and delete it', {retries: 2}, () => {
     const userCredentials = {
       "user": {
         "email":"stas@stas.stas",
@@ -69,7 +69,7 @@ describe('API Authentication', () => {
         "tagList": ["API Test"]
       }
     }
-    cy.request('POST', 'https://conduit-api.bondaracademy.com/api/users/login', 
+    cy.request('POST', Cypress.env('apiURL') + '/api/users/login', 
       userCredentials)
       .its('body')
       .then(body => {
@@ -79,7 +79,7 @@ describe('API Authentication', () => {
       //Provide object to include header
       cy.get('@authToken').then(token => {
       cy.request({
-        url: 'https://conduit-api.bondaracademy.com/api/articles/',
+        url: Cypress.env('apiURL') + '/api/articles/',
         headers: {'Authorization': 'Token ' + token},
         method: 'POST',
         body: bodyRequest
@@ -87,7 +87,7 @@ describe('API Authentication', () => {
         expect(response.status).to.equal(201)
         const articleSlug = response.body.article.slug
         cy.request({
-          url: `https://conduit-api.bondaracademy.com/api/articles/${articleSlug}`,
+          url: Cypress.env('apiURL') + `/api/articles/${articleSlug}`,
           headers: {'Authorization': 'Token ' + token},
           method: 'DELETE'
         }).then(deleteResponse => {
